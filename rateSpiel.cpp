@@ -6,19 +6,45 @@ int main() {
     srand(time(0));
 
     int secretNumber, guess, attempts = 0;
-    int maxAttempts = 10;  
+    int maxAttempts = 10;
     bool playAgain = true;
 
     std::cout << "Willkommen bei 'Rate die Zahl'!" << std::endl;
 
     while (playAgain) {
-        secretNumber = rand() % 100 + 1;
+        char difficulty;
+        std::cout << "Waehle eine Schwierigkeitsstufe: (e)infach, (m)ittel, (s)chwer: ";
+        std::cin >> difficulty;
+
+        int minRange, maxRange;
+
+        switch (difficulty) {
+            case 'e':
+                minRange = 1;
+                maxRange = 50;
+                break;
+            case 'm':
+                minRange = 1;
+                maxRange = 100;
+                break;
+            case 's':
+                minRange = 1;
+                maxRange = 200;
+                break;
+            default:
+                std::cout << "Ungueltige Eingabe. Standardmaessig wird mittlere Schwierigkeit gewaehlt." << std::endl;
+                minRange = 1;
+                maxRange = 100;
+                break;
+        }
+
+        secretNumber = rand() % maxRange + minRange;
         attempts = 0;
 
         std::cout << "Ich habe eine neue Zahl gewaehlt. Du hast " << maxAttempts << " Versuche." << std::endl;
 
         do {
-            std::cout << "Gib eine Zahl zwischen 1 und 100 ein: ";
+            std::cout << "Gib eine Zahl zwischen " << minRange << " und " << maxRange << " ein: ";
             std::cin >> guess;
 
             attempts++;
@@ -45,7 +71,7 @@ int main() {
         playAgain = (playAgainResponse == 'j' || playAgainResponse == 'J');
     }
 
-    std::cout << "Vielen Dank fürs Spielen!" << std::endl;
+    std::cout << "Vielen Dank fuer's Spielen!" << std::endl;
 
     return 0;
 }
